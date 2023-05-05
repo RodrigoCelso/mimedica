@@ -1,4 +1,4 @@
-package com.hospital;
+package com.ufmt.mimedica.hospital;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
