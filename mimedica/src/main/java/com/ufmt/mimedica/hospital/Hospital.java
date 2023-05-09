@@ -2,7 +2,6 @@ package com.ufmt.mimedica.hospital;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
 
 @Entity
 @Table(name = "hospital")
