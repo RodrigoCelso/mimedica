@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
+
 @Entity
 @Table(name = "medico")
 @SequenceGenerator(name = "seqMedico", sequenceName = "seq_medico_id", allocationSize = 1)
