@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
+import com.ufmt.mimedica.atendimento.Atendimento;
 
 @Entity
 @Table(name = "medico")
@@ -19,7 +20,6 @@ import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
 @lombok.Getter
 @lombok.Setter
 public class Medico {
-    
     @Id
     @GeneratedValue(generator = "seqMedico", strategy = GenerationType.SEQUENCE)
     private int id;
@@ -29,4 +29,6 @@ public class Medico {
     private int crm;
     @OneToMany(mappedBy = "medicoId")
     private List<HospitalMedico> hospitalMedicos;
+    @OneToMany(mappedBy = "medicoId")
+    private List<Atendimento> atendimentos;
 }
