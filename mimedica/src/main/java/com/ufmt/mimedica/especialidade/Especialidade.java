@@ -1,12 +1,17 @@
 package com.ufmt.mimedica.especialidade;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.ufmt.mimedica.especialidadeMedico.EspecialidadeMedico;
 
 @Entity
 @Table(name = "especialidade")
@@ -19,4 +24,6 @@ public class Especialidade {
     private int id;
     @Column
     private String tipo;
+    @OneToMany(mappedBy = "especialidadeId")
+    private List<EspecialidadeMedico> especialidadeMedicos;
 }
