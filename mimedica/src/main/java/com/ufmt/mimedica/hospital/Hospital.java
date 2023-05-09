@@ -1,13 +1,17 @@
 package com.ufmt.mimedica.hospital;
 
-import javax.annotation.Generated;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
 
 @Entity
 @Table(name = "hospital")
@@ -22,4 +26,6 @@ public class Hospital {
     private String nome;
     @Column
     private String cnpj;
+    @OneToMany(mappedBy = "medicoId")
+    private List<HospitalMedico> hospitalMedicos;
 }
