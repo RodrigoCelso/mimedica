@@ -2,6 +2,7 @@ package com.ufmt.mimedica.especialidadeMedico;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,7 @@ import com.ufmt.mimedica.medico.Medico;
 @lombok.Setter
 public class EspecialidadeMedico {
     @Id
-    @GeneratedValue(generator = "seqEspecialidadeMedico")
+    @GeneratedValue(generator = "seqEspecialidadeMedico", strategy = GenerationType.SEQUENCE)
     private int id;
     @ManyToOne
     @JoinColumn(name = "especialidade_id")
