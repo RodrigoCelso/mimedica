@@ -12,18 +12,23 @@ import javax.persistence.Table;
 import com.ufmt.mimedica.hospital.Hospital;
 import com.ufmt.mimedica.medico.Medico;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "hospitalMedico")
 @SequenceGenerator(name = "seqHospitalMedico", sequenceName = "seq_hospitalMedico_id", allocationSize = 1)
-@lombok.Getter
-@lombok.Setter
+@Getter
+@Setter
 public class HospitalMedico {
     @Id
     @GeneratedValue(generator = "seqHospitalMedico", strategy = GenerationType.SEQUENCE)
     private int id;
+    
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospitalId;
+    
     @ManyToOne
     @JoinColumn(name = "medico_id")
     private Medico medicoId;

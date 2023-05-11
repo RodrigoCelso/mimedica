@@ -11,24 +11,38 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
 import com.ufmt.mimedica.atendimento.Atendimento;
+import com.ufmt.mimedica.especialidadeMedico.EspecialidadeMedico;
+import com.ufmt.mimedica.hospitalMedico.HospitalMedico;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "medico")
 @SequenceGenerator(name = "seqMedico", sequenceName = "seq_medico_id", allocationSize = 1)
-@lombok.Getter
-@lombok.Setter
+@Getter
+@Setter
 public class Medico {
     @Id
     @GeneratedValue(generator = "seqMedico", strategy = GenerationType.SEQUENCE)
     private int id;
+    
     @Column
     private String nome;
+    
     @Column
     private int crm;
+    
+    // Todas as variáveis se chamam medicoId,
+    // mas são de entidades diferentes.
+    // Será que funciona?
     @OneToMany(mappedBy = "medicoId")
-    private List<HospitalMedico> hospitalMedicos;
+    private List<HospitalMedico> hospitaiMedicos;
+    
+    @OneToMany(mappedBy = "medicoId")
+    private List<EspecialidadeMedico> especialidadeMedicos;
+    
     @OneToMany(mappedBy = "medicoId")
     private List<Atendimento> atendimentos;
 }
