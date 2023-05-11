@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tipoPagamento")
-@SequenceGenerator(name = "seqTipoPagamento", sequenceName = "", allocationSize = 1)
+@SequenceGenerator(name = "seqTipoPagamento", sequenceName = "seq_tipoPagamento_id", allocationSize = 1)
 @lombok.Getter
 @lombok.Setter
 public class TipoPagamento {
