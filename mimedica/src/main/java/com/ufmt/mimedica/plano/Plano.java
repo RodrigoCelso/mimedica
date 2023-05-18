@@ -26,10 +26,9 @@ public class Plano {
     @GeneratedValue(generator = "seqPlano", strategy = GenerationType.SEQUENCE)
     private int id;
     
-    // Funciona??
     @Column
-    private List<String> tratamentos;
-
+    private int codigo;
+    
     @OneToMany(mappedBy = "planoId")
     private List<Paciente> pacientes;
 }
