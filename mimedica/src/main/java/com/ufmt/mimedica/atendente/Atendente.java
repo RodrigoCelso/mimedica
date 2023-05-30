@@ -31,7 +31,7 @@ public class Atendente {
     private String nome;
     
     @Column
-    private int cpf;
+    private String cpf;
 
     @OneToMany(mappedBy = "atendenteId")
     private List<Atendimento> atendimentos;

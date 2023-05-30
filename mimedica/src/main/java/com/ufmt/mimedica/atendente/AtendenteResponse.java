@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 public class AtendenteResponse {
     private int id;
     private String nome;
-    private int cpf;
+    private String cpf;
 
-    public static AtendenteResponse from(Atendente entidade){
+    public static AtendenteResponse Response(Atendente entidade){
         AtendenteResponse response = new AtendenteResponse();
         response.setId(entidade.getId());
         response.setNome(entidade.getNome());

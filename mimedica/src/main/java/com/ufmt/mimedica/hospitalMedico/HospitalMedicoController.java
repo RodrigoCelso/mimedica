@@ -1,4 +1,4 @@
-package com.ufmt.mimedica.atendente;
+package com.ufmt.mimedica.hospitalMedico;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,23 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(path="/atendente")
+@RequestMapping(path="/hospital-medico")
 @RequiredArgsConstructor
-public class AtendenteController {
+public class HospitalMedicoController {
 
-    private final AtendenteRepository repository;
+    private final HospitalMedicoRepository repository;
 
     @GetMapping(path="/")
-    public List<Atendente> index(){
+    public List<HospitalMedico> index(){
         return repository.findAll();
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AtendenteResponse> getById(@PathVariable int id){
-        Optional<Atendente> found = repository.findById(id);
+    public ResponseEntity<HospitalMedicoResponse> getById(@PathVariable int id){
+        Optional<HospitalMedico> found = repository.findById(id);
 
         if(found.isPresent()){
-            AtendenteResponse response = AtendenteResponse.Response(found.get());
+            HospitalMedicoResponse response = HospitalMedicoResponse.Response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -52,8 +52,8 @@ public class AtendenteController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody AtendenteRequest request){        
-        Atendente dados = AtendenteRequest.Request(request);
+    public ResponseEntity<String> cadastrar(@RequestBody HospitalMedicoRequest request){        
+        HospitalMedico dados = HospitalMedicoRequest.Request(request);
 
         try {
             repository.save(dados);
@@ -67,12 +67,12 @@ public class AtendenteController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody AtendenteRequest request){
-        Optional<Atendente> checagem = repository.findById(id);
+                                            @RequestBody HospitalMedicoRequest request){
+        Optional<HospitalMedico> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Atendente atendente = checagem.get();
+            HospitalMedico hospitalMedico = checagem.get();
             try{
-                repository.save(atendente);
+                repository.save(hospitalMedico);
             } catch(IllegalArgumentException e){
                 e.printStackTrace();
                 ResponseEntity.badRequest().body("Dados inválidos!");

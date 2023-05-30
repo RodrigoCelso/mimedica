@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AtendenteRequest {
     private String nome;
-    private int cpf;
+    private String cpf;
 
-    public static Atendente transcribe(AtendenteRequest entidade){
+    public static Atendente Request(AtendenteRequest entidade){
         Atendente request = new Atendente();
         request.setNome(entidade.getNome());
         request.setCpf(entidade.getCpf());

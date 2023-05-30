@@ -34,10 +34,10 @@ public class Paciente {
     private String nome;
     
     @Column
-    private int cpf;
+    private String cpf;
     
     @Column
-    private int cep;
+    private String cep;
     
     @Column
     private String complemento;

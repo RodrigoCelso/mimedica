@@ -1,7 +1,9 @@
 package com.ufmt.mimedica.atendimento;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +31,9 @@ public class Atendimento {
     @GeneratedValue(generator = "seqAtendimento", strategy = GenerationType.SEQUENCE)
     private int id;
     
+    @Column
+    private Date data;
+
     @ManyToOne
     @JoinColumn(name = "medico_id")
     private Medico medicoId;
