@@ -70,7 +70,7 @@ public class PacienteController {
                                             @RequestBody PacienteRequest request){
         Optional<Paciente> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Paciente paciente = checagem.get();
+            Paciente paciente = PacienteRequest.Request(request);
             try{
                 repository.save(paciente);
             } catch(IllegalArgumentException e){

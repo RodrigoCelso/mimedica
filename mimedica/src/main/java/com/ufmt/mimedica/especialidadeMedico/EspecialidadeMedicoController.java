@@ -30,12 +30,12 @@ public class EspecialidadeMedicoController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<EspecialidadeMedicoResponse> getById(@PathVariable int id){
+    public ResponseEntity<EspecialidadeMedico> getById(@PathVariable int id){
         Optional<EspecialidadeMedico> found = repository.findById(id);
 
         if(found.isPresent()){
-            EspecialidadeMedicoResponse response = EspecialidadeMedicoResponse.Response(found.get());
-            return ResponseEntity.ok().body(response);
+            EspecialidadeMedico especialidadeMedico = found.get();
+            return ResponseEntity.ok().body(especialidadeMedico);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,11 +52,9 @@ public class EspecialidadeMedicoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody EspecialidadeMedicoRequest request){        
-        EspecialidadeMedico dados = EspecialidadeMedicoRequest.Request(request);
-
+    public ResponseEntity<String> cadastrar(@RequestBody EspecialidadeMedico especialidadeMedico){        
         try {
-            repository.save(dados);
+            repository.save(especialidadeMedico);
         } catch(IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Dados Inválidos!");
@@ -67,10 +65,9 @@ public class EspecialidadeMedicoController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody EspecialidadeMedicoRequest request){
+                                            @RequestBody EspecialidadeMedico especialidadeMedico){
         Optional<EspecialidadeMedico> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            EspecialidadeMedico especialidadeMedico = checagem.get();
             try{
                 repository.save(especialidadeMedico);
             } catch(IllegalArgumentException e){

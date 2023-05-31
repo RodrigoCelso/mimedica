@@ -70,7 +70,7 @@ public class MedicoController {
                                             @RequestBody MedicoRequest request){
         Optional<Medico> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Medico medico = checagem.get();
+            Medico medico = MedicoRequest.Request(request);
             try{
                 repository.save(medico);
             } catch(IllegalArgumentException e){

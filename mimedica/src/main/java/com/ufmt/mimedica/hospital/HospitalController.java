@@ -70,7 +70,7 @@ public class HospitalController {
                                             @RequestBody HospitalRequest request){
         Optional<Hospital> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Hospital hospital = checagem.get();
+            Hospital hospital = HospitalRequest.Request(request);
             try{
                 repository.save(hospital);
             } catch(IllegalArgumentException e){

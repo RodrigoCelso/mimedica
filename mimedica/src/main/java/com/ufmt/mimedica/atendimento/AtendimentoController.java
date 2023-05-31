@@ -70,7 +70,7 @@ public class AtendimentoController {
                                             @RequestBody AtendimentoRequest request){
         Optional<Atendimento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Atendimento atendimento = checagem.get();
+            Atendimento atendimento = AtendimentoRequest.Request(request);
             try{
                 repository.save(atendimento);
             } catch(IllegalArgumentException e){

@@ -30,12 +30,12 @@ public class HospitalMedicoController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<HospitalMedicoResponse> getById(@PathVariable int id){
+    public ResponseEntity<HospitalMedico> getById(@PathVariable int id){
         Optional<HospitalMedico> found = repository.findById(id);
 
         if(found.isPresent()){
-            HospitalMedicoResponse response = HospitalMedicoResponse.Response(found.get());
-            return ResponseEntity.ok().body(response);
+            HospitalMedico hospitalMedico = found.get();
+            return ResponseEntity.ok().body(hospitalMedico);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,11 +52,9 @@ public class HospitalMedicoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody HospitalMedicoRequest request){        
-        HospitalMedico dados = HospitalMedicoRequest.Request(request);
-
+    public ResponseEntity<String> cadastrar(@RequestBody HospitalMedico hospitalMedico){        
         try {
-            repository.save(dados);
+            repository.save(hospitalMedico);
         } catch(IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Dados Inválidos!");
@@ -67,10 +65,9 @@ public class HospitalMedicoController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody HospitalMedicoRequest request){
+                                            @RequestBody HospitalMedico hospitalMedico){
         Optional<HospitalMedico> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            HospitalMedico hospitalMedico = checagem.get();
             try{
                 repository.save(hospitalMedico);
             } catch(IllegalArgumentException e){

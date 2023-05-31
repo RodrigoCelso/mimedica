@@ -70,7 +70,7 @@ public class AtendenteController {
                                             @RequestBody AtendenteRequest request){
         Optional<Atendente> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Atendente atendente = checagem.get();
+            Atendente atendente = AtendenteRequest.Request(request);
             try{
                 repository.save(atendente);
             } catch(IllegalArgumentException e){

@@ -70,7 +70,7 @@ public class PlanoController {
                                             @RequestBody PlanoRequest request){
         Optional<Plano> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Plano plano = checagem.get();
+            Plano plano = PlanoRequest.Request(request);
             try{
                 repository.save(plano);
             } catch(IllegalArgumentException e){

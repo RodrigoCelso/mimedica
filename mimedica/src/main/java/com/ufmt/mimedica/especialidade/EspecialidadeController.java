@@ -70,7 +70,7 @@ public class EspecialidadeController {
                                             @RequestBody EspecialidadeRequest request){
         Optional<Especialidade> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Especialidade especialidade = checagem.get();
+            Especialidade especialidade = EspecialidadeRequest.Request(request);
             try{
                 repository.save(especialidade);
             } catch(IllegalArgumentException e){

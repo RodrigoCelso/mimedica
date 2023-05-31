@@ -70,7 +70,7 @@ public class PagamentoController {
                                             @RequestBody PagamentoRequest request){
         Optional<Pagamento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Pagamento pagamento = checagem.get();
+            Pagamento pagamento = PagamentoRequest.Request(request);
             try{
                 repository.save(pagamento);
             } catch(IllegalArgumentException e){

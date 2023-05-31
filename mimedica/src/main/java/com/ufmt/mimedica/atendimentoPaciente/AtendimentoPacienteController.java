@@ -30,12 +30,12 @@ public class AtendimentoPacienteController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AtendimentoPacienteResponse> getById(@PathVariable int id){
+    public ResponseEntity<AtendimentoPaciente> getById(@PathVariable int id){
         Optional<AtendimentoPaciente> found = repository.findById(id);
 
         if(found.isPresent()){
-            AtendimentoPacienteResponse response = AtendimentoPacienteResponse.Response(found.get());
-            return ResponseEntity.ok().body(response);
+            AtendimentoPaciente atendimentoPaciente = found.get();
+            return ResponseEntity.ok().body(atendimentoPaciente);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,11 +52,9 @@ public class AtendimentoPacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody AtendimentoPacienteRequest request){        
-        AtendimentoPaciente dados = AtendimentoPacienteRequest.Request(request);
-
+    public ResponseEntity<String> cadastrar(@RequestBody AtendimentoPaciente atendimentoPaciente){        
         try {
-            repository.save(dados);
+            repository.save(atendimentoPaciente);
         } catch(IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Dados Inválidos!");
@@ -67,12 +65,11 @@ public class AtendimentoPacienteController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody AtendimentoPacienteRequest request){
+                                            @RequestBody AtendimentoPaciente atendimentoPaciente){
         Optional<AtendimentoPaciente> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            AtendimentoPaciente atendimento = checagem.get();
             try{
-                repository.save(atendimento);
+                repository.save(atendimentoPaciente);
             } catch(IllegalArgumentException e){
                 e.printStackTrace();
                 ResponseEntity.badRequest().body("Dados inválidos!");

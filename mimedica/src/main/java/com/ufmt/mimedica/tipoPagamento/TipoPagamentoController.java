@@ -30,12 +30,12 @@ public class TipoPagamentoController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<TipoPagamentoResponse> getById(@PathVariable int id){
+    public ResponseEntity<TipoPagamento> getById(@PathVariable int id){
         Optional<TipoPagamento> found = repository.findById(id);
 
         if(found.isPresent()){
-            TipoPagamentoResponse response = TipoPagamentoResponse.Response(found.get());
-            return ResponseEntity.ok().body(response);
+            TipoPagamento tipoPagamento = found.get();
+            return ResponseEntity.ok().body(tipoPagamento);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,11 +52,9 @@ public class TipoPagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody TipoPagamentoRequest request){        
-        TipoPagamento dados = TipoPagamentoRequest.Request(request);
-
+    public ResponseEntity<String> cadastrar(@RequestBody TipoPagamento tipoPagamento){        
         try {
-            repository.save(dados);
+            repository.save(tipoPagamento);
         } catch(IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Dados Inválidos!");
@@ -67,10 +65,9 @@ public class TipoPagamentoController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody TipoPagamentoRequest request){
+                                            @RequestBody TipoPagamento tipoPagamento){
         Optional<TipoPagamento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            TipoPagamento tipoPagamento = checagem.get();
             try{
                 repository.save(tipoPagamento);
             } catch(IllegalArgumentException e){
