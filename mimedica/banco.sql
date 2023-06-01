@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.4 (Debian 13.4-1.pgdg100+1)
--- Dumped by pg_dump version 13.4 (Debian 13.4-1.pgdg100+1)
+-- Dumped from database version 15.2 (Debian 15.2-1.pgdg110+1)
+-- Dumped by pg_dump version 15.2 (Debian 15.2-1.pgdg110+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -39,9 +39,9 @@ ALTER TABLE public.atendente OWNER TO postgres;
 
 CREATE TABLE public.atendimento (
     id integer NOT NULL,
+    data timestamp without time zone,
     atendente_id integer,
-    medico_id integer,
-    data timestamp without time zone
+    medico_id integer
 );
 
 
@@ -352,9 +352,7 @@ ALTER TABLE public.tipo_pagamento OWNER TO postgres;
 --
 
 COPY public.atendente (id, cpf, nome) FROM stdin;
-1	123	Pablo
-2	321	Lucas
-5	321	Lucas
+1	123.456.789-10	Americo Braga
 \.
 
 
@@ -362,7 +360,7 @@ COPY public.atendente (id, cpf, nome) FROM stdin;
 -- Data for Name: atendimento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.atendimento (id, atendente_id, medico_id, data) FROM stdin;
+COPY public.atendimento (id, data, atendente_id, medico_id) FROM stdin;
 \.
 
 
@@ -450,7 +448,7 @@ COPY public.tipo_pagamento (id, tipo) FROM stdin;
 -- Name: seq_atendente_id; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_atendente_id', 5, true);
+SELECT pg_catalog.setval('public.seq_atendente_id', 1, true);
 
 
 --
