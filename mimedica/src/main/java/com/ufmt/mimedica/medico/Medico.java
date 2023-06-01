@@ -34,9 +34,6 @@ public class Medico {
     @Column
     private int crm;
     
-    // Todas as variáveis se chamam medicoId,
-    // mas são de entidades diferentes.
-    // Será que funciona?
     @OneToMany(mappedBy = "medicoId")
     private List<HospitalMedico> hospitaiMedicos;
     

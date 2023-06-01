@@ -71,6 +71,7 @@ public class AtendenteController {
         Optional<Atendente> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Atendente atendente = AtendenteRequest.Request(request);
+            atendente.setId(id);
             try{
                 repository.save(atendente);
             } catch(IllegalArgumentException e){

@@ -71,6 +71,7 @@ public class AtendimentoController {
         Optional<Atendimento> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Atendimento atendimento = AtendimentoRequest.Request(request);
+            atendimento.setId(id);
             try{
                 repository.save(atendimento);
             } catch(IllegalArgumentException e){

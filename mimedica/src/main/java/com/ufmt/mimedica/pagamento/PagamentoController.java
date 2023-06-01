@@ -71,6 +71,7 @@ public class PagamentoController {
         Optional<Pagamento> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Pagamento pagamento = PagamentoRequest.Request(request);
+            pagamento.setId(id);
             try{
                 repository.save(pagamento);
             } catch(IllegalArgumentException e){

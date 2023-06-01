@@ -71,6 +71,7 @@ public class HospitalController {
         Optional<Hospital> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Hospital hospital = HospitalRequest.Request(request);
+            hospital.setId(id);
             try{
                 repository.save(hospital);
             } catch(IllegalArgumentException e){

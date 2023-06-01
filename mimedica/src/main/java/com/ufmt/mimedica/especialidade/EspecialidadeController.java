@@ -71,6 +71,7 @@ public class EspecialidadeController {
         Optional<Especialidade> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Especialidade especialidade = EspecialidadeRequest.Request(request);
+            especialidade.setId(id);
             try{
                 repository.save(especialidade);
             } catch(IllegalArgumentException e){

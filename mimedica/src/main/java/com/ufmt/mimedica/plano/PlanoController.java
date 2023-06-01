@@ -71,6 +71,7 @@ public class PlanoController {
         Optional<Plano> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Plano plano = PlanoRequest.Request(request);
+            plano.setId(id);
             try{
                 repository.save(plano);
             } catch(IllegalArgumentException e){

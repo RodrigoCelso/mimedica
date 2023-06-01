@@ -71,6 +71,7 @@ public class PacienteController {
         Optional<Paciente> checagem = repository.findById(id);
         if(checagem.isPresent()){
             Paciente paciente = PacienteRequest.Request(request);
+            paciente.setId(id);
             try{
                 repository.save(paciente);
             } catch(IllegalArgumentException e){
