@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.pagamento;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class PagamentoController {
     private final PagamentoRepository repository;
 
     @GetMapping(path="/")
-    public List<Pagamento> index(){
-        return repository.findAll();
+    public List<PagamentoResponse> index(){
+        List<Pagamento> pagamentos = repository.findAll();
+
+        List<PagamentoResponse> responses = new ArrayList<PagamentoResponse>();
+        
+        for(Pagamento pagamento : pagamentos) {
+            responses.add(PagamentoResponse.response(pagamento));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class PagamentoController {
         Optional<Pagamento> found = repository.findById(id);
 
         if(found.isPresent()){
-            PagamentoResponse response = PagamentoResponse.Response(found.get());
+            PagamentoResponse response = PagamentoResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class PagamentoController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody PagamentoRequest request){        
-        Pagamento dados = PagamentoRequest.Request(request);
+        Pagamento dados = PagamentoRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class PagamentoController {
                                             @RequestBody PagamentoRequest request){
         Optional<Pagamento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Pagamento pagamento = PagamentoRequest.Request(request);
+            Pagamento pagamento = PagamentoRequest.request(request);
             pagamento.setId(id);
             try{
                 repository.save(pagamento);

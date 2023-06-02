@@ -11,7 +11,7 @@ public class PlanoRequest {
 
     private int codigo;
 
-    public static Plano Request(PlanoRequest request){
+    public static Plano request(PlanoRequest request){
         Plano plano = new Plano();
         plano.setCodigo(request.getCodigo());
         return plano;

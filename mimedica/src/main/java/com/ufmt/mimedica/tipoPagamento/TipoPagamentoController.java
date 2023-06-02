@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.tipoPagamento;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class TipoPagamentoController {
     private final TipoPagamentoRepository repository;
 
     @GetMapping(path="/")
-    public List<TipoPagamento> index(){
-        return repository.findAll();
+    public List<TipoPagamentoResponse> index(){
+        List<TipoPagamento> tipoPagamentos = repository.findAll();
+
+        List<TipoPagamentoResponse> responses = new ArrayList<TipoPagamentoResponse>();
+        
+        for(TipoPagamento tipoPagamento : tipoPagamentos) {
+            responses.add(TipoPagamentoResponse.response(tipoPagamento));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class TipoPagamentoController {
         Optional<TipoPagamento> found = repository.findById(id);
 
         if(found.isPresent()){
-            TipoPagamentoResponse response = TipoPagamentoResponse.Response(found.get());
+            TipoPagamentoResponse response = TipoPagamentoResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class TipoPagamentoController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody TipoPagamentoRequest request){        
-        TipoPagamento dados = TipoPagamentoRequest.Request(request);
+        TipoPagamento dados = TipoPagamentoRequest.request(request);
         
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class TipoPagamentoController {
                                             @RequestBody TipoPagamentoRequest request){
         Optional<TipoPagamento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            TipoPagamento tipoPagamento = TipoPagamentoRequest.Request(request);
+            TipoPagamento tipoPagamento = TipoPagamentoRequest.request(request);
             tipoPagamento.setId(id);
             try{
                 repository.save(tipoPagamento);

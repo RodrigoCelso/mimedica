@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.hospital;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class HospitalController {
     private final HospitalRepository repository;
 
     @GetMapping(path="/")
-    public List<Hospital> index(){
-        return repository.findAll();
+    public List<HospitalResponse> index(){
+        List<Hospital> hospitais = repository.findAll();
+
+        List<HospitalResponse> responses = new ArrayList<HospitalResponse>();
+        
+        for(Hospital hospital : hospitais) {
+            responses.add(HospitalResponse.response(hospital));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class HospitalController {
         Optional<Hospital> found = repository.findById(id);
 
         if(found.isPresent()){
-            HospitalResponse response = HospitalResponse.Response(found.get());
+            HospitalResponse response = HospitalResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class HospitalController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody HospitalRequest request){        
-        Hospital dados = HospitalRequest.Request(request);
+        Hospital dados = HospitalRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class HospitalController {
                                             @RequestBody HospitalRequest request){
         Optional<Hospital> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Hospital hospital = HospitalRequest.Request(request);
+            Hospital hospital = HospitalRequest.request(request);
             hospital.setId(id);
             try{
                 repository.save(hospital);

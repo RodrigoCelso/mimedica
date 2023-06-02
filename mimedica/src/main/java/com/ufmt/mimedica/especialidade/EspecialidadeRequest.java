@@ -11,7 +11,7 @@ public class EspecialidadeRequest {
 
     private String tipo;
 
-    public static Especialidade Request(EspecialidadeRequest request){
+    public static Especialidade request(EspecialidadeRequest request){
         Especialidade especialidade = new Especialidade();
         especialidade.setTipo(request.getTipo());
         return especialidade;

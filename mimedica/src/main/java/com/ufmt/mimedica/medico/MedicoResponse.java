@@ -13,7 +13,7 @@ public class MedicoResponse {
     private String nome;
     private int crm;
 
-    public static MedicoResponse Response(Medico medico){
+    public static MedicoResponse response(Medico medico){
         MedicoResponse response = new MedicoResponse();
         response.setId(medico.getId());
         response.setNome(medico.getNome());

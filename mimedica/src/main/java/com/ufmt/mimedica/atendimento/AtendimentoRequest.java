@@ -13,7 +13,7 @@ public class AtendimentoRequest {
 
     private Date data;
 
-    public static Atendimento Request(AtendimentoRequest request){
+    public static Atendimento request(AtendimentoRequest request){
         Atendimento atendimento = new Atendimento();
         atendimento.setData(request.getData());
         return atendimento;

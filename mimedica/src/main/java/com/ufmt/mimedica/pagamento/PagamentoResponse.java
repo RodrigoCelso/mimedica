@@ -12,7 +12,7 @@ public class PagamentoResponse {
     private int id;
     private float valor;
 
-    public static PagamentoResponse Response(Pagamento pagamento){
+    public static PagamentoResponse response(Pagamento pagamento){
         PagamentoResponse response = new PagamentoResponse();
         response.setId(pagamento.getId());
         response.setValor(pagamento.getValor());

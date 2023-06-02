@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.atendimento;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class AtendimentoController {
     private final AtendimentoRepository repository;
 
     @GetMapping(path="/")
-    public List<Atendimento> index(){
-        return repository.findAll();
+    public List<AtendimentoResponse> index(){
+        List<Atendimento> atendimentos = repository.findAll();
+
+        List<AtendimentoResponse> responses = new ArrayList<AtendimentoResponse>();
+        
+        for(Atendimento atendimento : atendimentos) {
+            responses.add(AtendimentoResponse.response(atendimento));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class AtendimentoController {
         Optional<Atendimento> found = repository.findById(id);
 
         if(found.isPresent()){
-            AtendimentoResponse response = AtendimentoResponse.Response(found.get());
+            AtendimentoResponse response = AtendimentoResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class AtendimentoController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody AtendimentoRequest request){        
-        Atendimento dados = AtendimentoRequest.Request(request);
+        Atendimento dados = AtendimentoRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class AtendimentoController {
                                             @RequestBody AtendimentoRequest request){
         Optional<Atendimento> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Atendimento atendimento = AtendimentoRequest.Request(request);
+            Atendimento atendimento = AtendimentoRequest.request(request);
             atendimento.setId(id);
             try{
                 repository.save(atendimento);

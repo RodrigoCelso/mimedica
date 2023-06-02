@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.paciente;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class PacienteController {
     private final PacienteRepository repository;
 
     @GetMapping(path="/")
-    public List<Paciente> index(){
-        return repository.findAll();
+    public List<PacienteResponse> index(){
+        List<Paciente> pacientes = repository.findAll();
+
+        List<PacienteResponse> responses = new ArrayList<PacienteResponse>();
+        
+        for(Paciente paciente : pacientes) {
+            responses.add(PacienteResponse.response(paciente));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class PacienteController {
         Optional<Paciente> found = repository.findById(id);
 
         if(found.isPresent()){
-            PacienteResponse response = PacienteResponse.Response(found.get());
+            PacienteResponse response = PacienteResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class PacienteController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody PacienteRequest request){        
-        Paciente dados = PacienteRequest.Request(request);
+        Paciente dados = PacienteRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class PacienteController {
                                             @RequestBody PacienteRequest request){
         Optional<Paciente> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Paciente paciente = PacienteRequest.Request(request);
+            Paciente paciente = PacienteRequest.request(request);
             paciente.setId(id);
             try{
                 repository.save(paciente);

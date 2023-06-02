@@ -15,7 +15,7 @@ public class PacienteResponse {
     private String cep;
     private String complemento;
 
-    public static PacienteResponse Response(Paciente paciente){
+    public static PacienteResponse response(Paciente paciente){
         PacienteResponse response = new PacienteResponse();
         response.setId(paciente.getId());
         response.setNome(paciente.getNome());

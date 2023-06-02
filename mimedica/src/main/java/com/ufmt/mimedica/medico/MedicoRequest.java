@@ -12,7 +12,7 @@ public class MedicoRequest {
     private String nome;
     private int crm;
 
-    public static Medico Request(MedicoRequest request){
+    public static Medico request(MedicoRequest request){
         Medico medico = new Medico();
         medico.setNome(request.getNome());
         medico.setCrm(request.getCrm());

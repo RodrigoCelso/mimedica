@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.medico;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class MedicoController {
     private final MedicoRepository repository;
 
     @GetMapping(path="/")
-    public List<Medico> index(){
-        return repository.findAll();
+    public List<MedicoResponse> index(){
+        List<Medico> medicos = repository.findAll();
+
+        List<MedicoResponse> responses = new ArrayList<MedicoResponse>();
+        
+        for(Medico medico : medicos) {
+            responses.add(MedicoResponse.response(medico));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class MedicoController {
         Optional<Medico> found = repository.findById(id);
 
         if(found.isPresent()){
-            MedicoResponse response = MedicoResponse.Response(found.get());
+            MedicoResponse response = MedicoResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class MedicoController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody MedicoRequest request){        
-        Medico dados = MedicoRequest.Request(request);
+        Medico dados = MedicoRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class MedicoController {
                                             @RequestBody MedicoRequest request){
         Optional<Medico> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Medico medico = MedicoRequest.Request(request);
+            Medico medico = MedicoRequest.request(request);
             medico.setId(id);
             try{
                 repository.save(medico);

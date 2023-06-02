@@ -12,7 +12,7 @@ public class AtendenteResponse {
     private String nome;
     private String cpf;
 
-    public static AtendenteResponse Response(Atendente entidade){
+    public static AtendenteResponse response(Atendente entidade){
         AtendenteResponse response = new AtendenteResponse();
         response.setId(entidade.getId());
         response.setNome(entidade.getNome());

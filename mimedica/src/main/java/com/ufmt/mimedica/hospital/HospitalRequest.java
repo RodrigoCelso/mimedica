@@ -12,7 +12,7 @@ public class HospitalRequest {
     private String nome;
     private String cnpj;
 
-    public static Hospital Request(HospitalRequest request){
+    public static Hospital request(HospitalRequest request){
         Hospital hospital = new Hospital();
         hospital.setNome(request.getNome());
         hospital.setCnpj(request.getCnpj());

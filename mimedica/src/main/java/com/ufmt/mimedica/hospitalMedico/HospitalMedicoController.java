@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.hospitalMedico;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,17 +26,25 @@ public class HospitalMedicoController {
     private final HospitalMedicoRepository repository;
 
     @GetMapping(path="/")
-    public List<HospitalMedico> index(){
-        return repository.findAll();
+    public List<HospitalMedicoResponse> index(){
+        List<HospitalMedico> hospitalMedicos = repository.findAll();
+
+        List<HospitalMedicoResponse> responses = new ArrayList<HospitalMedicoResponse>();
+        
+        for(HospitalMedico hospitalMedico : hospitalMedicos) {
+            responses.add(HospitalMedicoResponse.response(hospitalMedico));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<HospitalMedico> getById(@PathVariable int id){
+    public ResponseEntity<HospitalMedicoResponse> getById(@PathVariable int id){
         Optional<HospitalMedico> found = repository.findById(id);
 
         if(found.isPresent()){
-            HospitalMedico hospitalMedico = found.get();
-            return ResponseEntity.ok().body(hospitalMedico);
+            HospitalMedicoResponse response = HospitalMedicoResponse.response(found.get());
+            return ResponseEntity.ok().body(response);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,7 +61,9 @@ public class HospitalMedicoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody HospitalMedico hospitalMedico){        
+    public ResponseEntity<String> cadastrar(@RequestBody HospitalMedicoRequest request){
+        HospitalMedico hospitalMedico = HospitalMedicoRequest.request(request);
+
         try {
             repository.save(hospitalMedico);
         } catch(IllegalArgumentException e){
@@ -65,9 +76,11 @@ public class HospitalMedicoController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody HospitalMedico hospitalMedico){
+                                            @RequestBody HospitalMedicoRequest request){
         Optional<HospitalMedico> checagem = repository.findById(id);
         if(checagem.isPresent()){
+            HospitalMedico hospitalMedico = HospitalMedicoRequest.request(request);
+            hospitalMedico.setId(id);
             try{
                 repository.save(hospitalMedico);
             } catch(IllegalArgumentException e){

@@ -14,7 +14,7 @@ public class PacienteRequest {
     private String cep;
     private String complemento;
 
-    public static Paciente Request(PacienteRequest request){
+    public static Paciente request(PacienteRequest request){
         Paciente paciente = new Paciente();
         paciente.setNome(request.getNome());
         paciente.setCpf(request.getCpf());

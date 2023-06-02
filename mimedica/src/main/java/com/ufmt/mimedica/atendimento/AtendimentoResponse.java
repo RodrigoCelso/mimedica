@@ -14,7 +14,7 @@ public class AtendimentoResponse {
     private int id;
     private Date data;
 
-    public static AtendimentoResponse Response(Atendimento atendimento){
+    public static AtendimentoResponse response(Atendimento atendimento){
         AtendimentoResponse response = new AtendimentoResponse();
         response.setId(atendimento.getId());
         response.setData(atendimento.getData());

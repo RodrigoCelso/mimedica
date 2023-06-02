@@ -11,7 +11,7 @@ public class AtendenteRequest {
     private String nome;
     private String cpf;
 
-    public static Atendente Request(AtendenteRequest entidade){
+    public static Atendente request(AtendenteRequest entidade){
         Atendente request = new Atendente();
         request.setNome(entidade.getNome());
         request.setCpf(entidade.getCpf());

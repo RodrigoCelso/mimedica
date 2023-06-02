@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.plano;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class PlanoController {
     private final PlanoRepository repository;
 
     @GetMapping(path="/")
-    public List<Plano> index(){
-        return repository.findAll();
+    public List<PlanoResponse> index(){
+        List<Plano> planos = repository.findAll();
+
+        List<PlanoResponse> responses = new ArrayList<PlanoResponse>();
+        
+        for(Plano plano : planos) {
+            responses.add(PlanoResponse.response(plano));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class PlanoController {
         Optional<Plano> found = repository.findById(id);
 
         if(found.isPresent()){
-            PlanoResponse response = PlanoResponse.Response(found.get());
+            PlanoResponse response = PlanoResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class PlanoController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody PlanoRequest request){        
-        Plano dados = PlanoRequest.Request(request);
+        Plano dados = PlanoRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class PlanoController {
                                             @RequestBody PlanoRequest request){
         Optional<Plano> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Plano plano = PlanoRequest.Request(request);
+            Plano plano = PlanoRequest.request(request);
             plano.setId(id);
             try{
                 repository.save(plano);

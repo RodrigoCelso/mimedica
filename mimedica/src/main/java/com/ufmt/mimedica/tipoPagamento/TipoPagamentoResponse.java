@@ -12,7 +12,7 @@ public class TipoPagamentoResponse {
     private int id;
     private String tipo;
 
-    public static TipoPagamentoResponse Response(TipoPagamento tipoPagamento){
+    public static TipoPagamentoResponse response(TipoPagamento tipoPagamento){
         TipoPagamentoResponse response = new TipoPagamentoResponse();
         response.setId(tipoPagamento.getId());
         response.setTipo(tipoPagamento.getTipo());

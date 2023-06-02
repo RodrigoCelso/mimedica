@@ -11,7 +11,7 @@ public class PagamentoRequest {
 
     private float valor;
 
-    public static Pagamento Request(PagamentoRequest request){
+    public static Pagamento request(PagamentoRequest request){
         Pagamento pagamento = new Pagamento();
         pagamento.setValor(request.getValor());
         return pagamento;

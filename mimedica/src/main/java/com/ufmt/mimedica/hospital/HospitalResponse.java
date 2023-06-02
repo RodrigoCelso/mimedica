@@ -13,7 +13,7 @@ public class HospitalResponse {
     private String nome;
     private String cnpj;
 
-    public static HospitalResponse Response(Hospital hospital){
+    public static HospitalResponse response(Hospital hospital){
         HospitalResponse response = new HospitalResponse();
         response.setId(hospital.getId());
         response.setNome(hospital.getNome());

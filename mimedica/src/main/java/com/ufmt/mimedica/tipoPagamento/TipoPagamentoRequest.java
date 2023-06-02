@@ -11,7 +11,7 @@ public class TipoPagamentoRequest {
 
     private String tipo;
 
-    public static TipoPagamento Request(TipoPagamentoRequest request){
+    public static TipoPagamento request(TipoPagamentoRequest request){
         TipoPagamento pagamento = new TipoPagamento();
         pagamento.setTipo(request.getTipo());
         return pagamento;

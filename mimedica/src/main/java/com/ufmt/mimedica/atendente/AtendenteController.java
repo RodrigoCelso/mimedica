@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.atendente;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,19 @@ public class AtendenteController {
     private final AtendenteRepository repository;
 
     @GetMapping(path="/")
-    public List<Atendente> index(){
-        return repository.findAll();
+    public List<AtendenteResponse> index(){
+        List<Atendente> atendentes = repository.findAll();
+
+        // Alternativamente:
+        // atendentes.stream().map(AtendenteResponse::response).collect(Collectors.toList());
+
+        List<AtendenteResponse> responses = new ArrayList<AtendenteResponse>();
+        
+        for(Atendente atendente : atendentes) {
+            responses.add(AtendenteResponse.response(atendente));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +46,7 @@ public class AtendenteController {
         Optional<Atendente> found = repository.findById(id);
 
         if(found.isPresent()){
-            AtendenteResponse response = AtendenteResponse.Response(found.get());
+            AtendenteResponse response = AtendenteResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +65,7 @@ public class AtendenteController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody AtendenteRequest request){        
-        Atendente dados = AtendenteRequest.Request(request);
+        Atendente dados = AtendenteRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +82,7 @@ public class AtendenteController {
                                             @RequestBody AtendenteRequest request){
         Optional<Atendente> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Atendente atendente = AtendenteRequest.Request(request);
+            Atendente atendente = AtendenteRequest.request(request);
             atendente.setId(id);
             try{
                 repository.save(atendente);

@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.atendimentoPaciente;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,17 +26,25 @@ public class AtendimentoPacienteController {
     private final AtendimentoPacienteRepository repository;
 
     @GetMapping(path="/")
-    public List<AtendimentoPaciente> index(){
-        return repository.findAll();
+    public List<AtendimentoPacienteResponse> index(){
+        List<AtendimentoPaciente> atendimentoPacientes = repository.findAll();
+
+        List<AtendimentoPacienteResponse> responses = new ArrayList<AtendimentoPacienteResponse>();
+        
+        for(AtendimentoPaciente atendimentoPaciente : atendimentoPacientes) {
+            responses.add(AtendimentoPacienteResponse.response(atendimentoPaciente));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AtendimentoPaciente> getById(@PathVariable int id){
+    public ResponseEntity<AtendimentoPacienteResponse> getById(@PathVariable int id){
         Optional<AtendimentoPaciente> found = repository.findById(id);
 
         if(found.isPresent()){
-            AtendimentoPaciente atendimentoPaciente = found.get();
-            return ResponseEntity.ok().body(atendimentoPaciente);
+            AtendimentoPacienteResponse response = AtendimentoPacienteResponse.response(found.get());
+            return ResponseEntity.ok().body(response);
         }
 
         return ResponseEntity.notFound().build();
@@ -52,9 +61,11 @@ public class AtendimentoPacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody AtendimentoPaciente atendimentoPaciente){        
+    public ResponseEntity<String> cadastrar(@RequestBody AtendimentoPacienteRequest request){  
+        AtendimentoPaciente dados = AtendimentoPacienteRequest.request(request);
+        
         try {
-            repository.save(atendimentoPaciente);
+            repository.save(dados);
         } catch(IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Dados Inválidos!");
@@ -65,9 +76,11 @@ public class AtendimentoPacienteController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<String> atualizar(@PathVariable int id,
-                                            @RequestBody AtendimentoPaciente atendimentoPaciente){
+                                            @RequestBody AtendimentoPacienteRequest request){
         Optional<AtendimentoPaciente> checagem = repository.findById(id);
         if(checagem.isPresent()){
+            AtendimentoPaciente atendimentoPaciente = AtendimentoPacienteRequest.request(request);
+            atendimentoPaciente.setId(id);
             try{
                 repository.save(atendimentoPaciente);
             } catch(IllegalArgumentException e){

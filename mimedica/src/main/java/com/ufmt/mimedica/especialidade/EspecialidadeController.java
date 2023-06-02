@@ -1,5 +1,6 @@
 package com.ufmt.mimedica.especialidade;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,16 @@ public class EspecialidadeController {
     private final EspecialidadeRepository repository;
 
     @GetMapping(path="/")
-    public List<Especialidade> index(){
-        return repository.findAll();
+    public List<EspecialidadeResponse> index(){
+        List<Especialidade> especialidades = repository.findAll();
+
+        List<EspecialidadeResponse> responses = new ArrayList<EspecialidadeResponse>();
+        
+        for(Especialidade especialidade : especialidades) {
+            responses.add(EspecialidadeResponse.response(especialidade));
+        }
+
+        return responses;
     }
 
     @GetMapping(path = "/{id}")
@@ -34,7 +43,7 @@ public class EspecialidadeController {
         Optional<Especialidade> found = repository.findById(id);
 
         if(found.isPresent()){
-            EspecialidadeResponse response = EspecialidadeResponse.Response(found.get());
+            EspecialidadeResponse response = EspecialidadeResponse.response(found.get());
             return ResponseEntity.ok().body(response);
         }
 
@@ -53,7 +62,7 @@ public class EspecialidadeController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody EspecialidadeRequest request){        
-        Especialidade dados = EspecialidadeRequest.Request(request);
+        Especialidade dados = EspecialidadeRequest.request(request);
 
         try {
             repository.save(dados);
@@ -70,7 +79,7 @@ public class EspecialidadeController {
                                             @RequestBody EspecialidadeRequest request){
         Optional<Especialidade> checagem = repository.findById(id);
         if(checagem.isPresent()){
-            Especialidade especialidade = EspecialidadeRequest.Request(request);
+            Especialidade especialidade = EspecialidadeRequest.request(request);
             especialidade.setId(id);
             try{
                 repository.save(especialidade);

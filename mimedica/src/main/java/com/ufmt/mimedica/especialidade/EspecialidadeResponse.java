@@ -12,7 +12,7 @@ public class EspecialidadeResponse {
     private int id;
     private String tipo;
 
-    public static EspecialidadeResponse Response(Especialidade especialidade){
+    public static EspecialidadeResponse response(Especialidade especialidade){
         EspecialidadeResponse response = new EspecialidadeResponse();
         response.setId(especialidade.getId());
         response.setTipo(especialidade.getTipo());
